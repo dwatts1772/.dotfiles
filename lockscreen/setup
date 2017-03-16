@@ -1,0 +1,3 @@
+#!/bin/sh
+install -Dm644 lock@.service /etc/systemd/system/lock@.service
+install -Dm755 wmlock /usr/local/bin/wmlock

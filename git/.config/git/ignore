@@ -1,0 +1,14 @@
+__pycache__/
+venv/
+.go/
+.idea/
+
+*.swp
+*.pyc
+
+.DS_Store
+.vagrant
+.nvimrc
+
+tags
+.tmuxrc

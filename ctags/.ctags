@@ -1,0 +1,4 @@
+--exclude=.git
+--exclude=.meteor
+--exclude=node_modules
+--exclude=target

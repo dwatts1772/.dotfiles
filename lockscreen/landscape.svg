@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="160" height="90">
+    <g stroke="{{accent.brighten(-35)}}" stroke-width="30">
+        <line x1="15" y1="-20" x2="145" y2="110"/>
+        <line x1="80" y1="45" x2="15" y2="110"/>
+    </g>
+    <g stroke="{{accent}}" stroke-width="20">
+        <line x1="15" y1="-20" x2="145" y2="110"/>
+        <line x1="80" y1="45" x2="15" y2="110"/>
+    </g>
+</svg>

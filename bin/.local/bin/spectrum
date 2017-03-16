@@ -1,0 +1,37 @@
+#!/usr/bin/env zsh
+#                          __
+#    _________  ___  _____/ /________  ______ ___
+#   / ___/ __ \/ _ \/ ___/ __/ ___/ / / / __ `__ \
+#  (__  ) /_/ /  __/ /__/ /_/ /  / /_/ / / / / / /
+# /____/ .___/\___/\___/\__/_/   \__,_/_/ /_/ /_/
+#     /_/
+
+print_help() {
+    echo "Usage: spectrum [OPTIONS] [TEXT]
+    OPTIONS:
+      -h    show this help
+      -f    print foreground"
+}
+
+bg=48
+while getopts "hf" opt; do
+    case $opt in
+        h)
+            print_help
+            exit 0
+            ;;
+        f)
+            bg=38
+            ;;
+        ?)
+            print_help >&2
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+text=${1:-'Lorem ipsum dolor sit amet'}
+for c in {000..255}; do
+    print -P -- "%{\e[${bg};5;${c}m%}[$c] $text%{\e[0m%}"
+done

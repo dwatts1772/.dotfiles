@@ -1,0 +1,105 @@
+#!/bin/sh
+#     ____               _
+#    / __ \_________    (_)
+#   / /_/ / ___/ __ \  / /
+#  / ____/ /  / /_/ / / /
+# /_/   /_/   \____/_/ /
+#                 /___/
+
+WORKSPACE=${WORKSPACE:-$HOME/Workspace}
+PROJECTS=${PROJECTS:-$WORKSPACE/Projects}
+LEARNING=${LEARNING:-$WORKSPACE/Learning}
+
+cmds="switch learn new"
+exec_cmds="switch learn"
+exec_name="$(basename $0)"
+
+_in() {
+    for i in $1; do
+        [ "$i" = "$2" ] && return 0
+    done
+    return 1
+}
+
+_realpath() {
+    case "$1" in
+        /*) printf "$1";;
+        *) printf "$PWD/$1";;
+    esac
+}
+
+_tmuxd() {
+    td_dir="$(_realpath "$2")"
+    td_name="$(printf "$1" | tr -d '.')"
+    td_rc="$td_dir/.tmuxrc"
+    tmux new-session -d -c "$td_dir" -s "$td_name"
+    if [ -e "$td_rc" ]; then
+        sed "s/^\([a-z0-9-]\+\)/tmux \1 -t $td_name/i" "$td_rc" |
+        env INIT_DIR="$td_dir" sh
+    fi
+}
+
+if _in "$exec_cmds" "$exec_name"; then
+    cmd="$exec_name"
+elif _in "$cmds" "$1"; then
+    cmd="$1"
+    shift
+else
+    cmd="switch"
+fi
+
+proj_switch() {
+    while getopts ":l" opt; do
+        case $opt in
+            l)
+                ls -1 "$PROJECTS"
+                exit 0
+                ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+    name="$1"
+    [ -z "$name" ] && return 1
+    fpath="$PROJECTS/$name"
+    [ ! -d "$fpath" ] && return 1
+    _tmuxd "$name" "$fpath"
+}
+
+proj_learn() {
+    while getopts ":l" opt; do
+        case $opt in
+            l)
+                listing=true
+                ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+    subject="$1"
+    exercise="$2"
+
+    if [ "$listing" == "true" ]; then
+        if [ -z "$subject" ]; then
+            ls -1 "$LEARNING"
+            exit 0
+        elif [ -z "$exercise" ]; then
+            ls -1 "$LEARNING/$subject"
+            exit 0
+        fi
+    fi
+
+    [ -z "$subject" -o -z "$exercise" ] && return 1
+    fpath="$LEARNING/$subject/$exercise"
+    [ ! -d "$fpath" ] && mkdir -p "$fpath"
+    _tmuxd "$subject-$exercise" "$fpath"
+}
+
+proj_new() {
+    name="$1"
+    [ -z "$name" ] && return 1
+    fpath="$PROJECTS/$name"
+    [ -e "$fpath" ] && return 1
+    mkdir -p "$fpath"
+    _tmuxd "$name" "$fpath"
+}
+
+eval proj_${cmd} $@

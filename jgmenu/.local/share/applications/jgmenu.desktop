@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=jgmenu
+X-GNOME-FullName=Menu
+Exec=jgmenu_run pmenu
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=apps.png
+Categories=Menu
+MimeType=
+StartupNotify=false

@@ -1,0 +1,10 @@
+#!/bin/sh
+wm="$(wmctrl -m | awk '/^Name:/ {print $2}')"
+case "$wm" in
+    i3)
+        i3-msg exit
+        ;;
+    Openbox)
+        openbox --exit
+        ;;
+esac
