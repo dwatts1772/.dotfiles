@@ -150,6 +150,15 @@ Key.on('z', CONTROL_SHIFT, function() {
   var ref;
   return (ref = Window.focused()) != null ? ref.to(CENTRE) : void 0;
 });
+Key.on('x', CONTROL_SHIFT, function(){
+  var ref;
+  var screen = Screen.main().flippedVisibleFrame();
+
+  if((ref = Window.focused()) != null){
+    return ref.setTopLeft({x:(screen.width / 2) - (ref.frame().width /2), y:0});
+  }
+  return void 0;
+});
 Key.on('q', CONTROL_ALT_SHIFT, function() {
   var window;
   window = Window.focused();
@@ -179,11 +188,11 @@ Key.on('å', CONTROL_SHIFT, function() {
   var ref;
   return (ref = Window.focused()) != null ? ref.fill() : void 0;
 });
-Key.on('o', CONTROL_SHIFT, function() {
+Key.on('left', CONTROL_SHIFT, function() {
   var ref;
   return (ref = Window.focused()) != null ? ref.fill(LEFT) : void 0;
 });
-Key.on('p', CONTROL_SHIFT, function() {
+Key.on('right', CONTROL_SHIFT, function() {
   var ref;
   return (ref = Window.focused()) != null ? ref.fill(RIGHT) : void 0;
 });
@@ -197,11 +206,15 @@ Key.on('o', CONTROL_ALT_SHIFT, function() {
   window = Window.focused();
   return window != null ? window.fill(LEFT, window.screen().next()) : void 0;
 });
-Key.on('p', CONTROL_ALT_SHIFT, function() {
+Key.on('right', CONTROL_ALT_SHIFT, function() {
   var window;
   window = Window.focused();
   return window != null ? window.fill(RIGHT, window.screen().next()) : void 0;
 });
+Key.on('up', CONTROL_ALT_SHIFT, function(){
+  var window = Window.focused;
+  return (ref = Window.focused()) != null ? ref.fill() : void 0;
+})
 Key.on('ä', CONTROL_SHIFT, function() {
   var ref;
   return (ref = Window.focused()) != null ? ref.resize({
