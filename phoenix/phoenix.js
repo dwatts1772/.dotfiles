@@ -6,7 +6,7 @@ HIDDEN_DOCK_MARGIN = 3; INCREMENT = 0.05; CONTROL_SHIFT = ['ctrl', 'shift']; CON
 CENTRE = 'centre'; NW = 'nw'; NE = 'ne'; SE = 'se'; SW = 'sw'; ChainWindow = (function() {
   function ChainWindow(window1, margin) {
     this.window = window1;
-    this.margin = margin != null ? margin : 10;
+    this.margin = margin != null ? margin : 20;
     this.frame = this.window.frame();
     this.parent = this.window.screen().flippedVisibleFrame();
   }
