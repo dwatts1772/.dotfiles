@@ -1,147 +1,122 @@
-#              __
-#  ____  _____/ /_
-# /_  / / ___/ __ \
-#  / /_(__  ) / / /
-# /___/____/_/ /_/
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export ANDROID_HOME=/usr/local/share/android-sdk
+export JAVA_HOME=/Library/Java/Home
+
+export PATH=$ANDROID_HOME/tools:$HOME/bin:/usr/local/bin:$PATH
+export PATH=$ANDROID_HOME/platform-tools:$PATH
+
+export PATH=/Users/davidwatts/.npm-global/bin:$PATH
+
+ #Set GRADLE_HOME
+  export GRADLE_HOME=/Applications/Android\ Studio.app/Contents/gradle/gradle-3.2
+  export PATH=$PATH:$GRADLE_HOME/bin
+  export PATH=/Applications/Android\ Studio.app/Contents/plugins/android/lib/templates/gradle/wrapper/:$PATH
+
+
+###-tns-completion-start-###
+if [ -f /Users/davidwatts/.tnsrc ]; then 
+    source /Users/davidwatts/.tnsrc 
+fi
+###-tns-completion-end-###
+
+
+# Path to your oh-my-zsh installation.
+export ZSH=/Users/davidwatts/.oh-my-zsh
+
+
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="avit"
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git colored-man colorize github jira vagrant virtualenv pip python brew osx zsh-syntax-highlighting)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
 #
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 
-#---[PATH]----------------------------------------------------------------------
-if [ "$(uname)" = "Darwin" ]; then
-  # brew fix
-  PATH="/usr/local/bin:${PATH}"
-
-  # gnu bin
-  PATH="${COREUTILS_HOME}/libexec/gnubin:${PATH}"
-  MANPATH="${COREUTILS_HOME}/libexec/gnuman:$MANPATH"
-
-  #java
-  PATH="${JAVA_HOME}/bin:${PATH}"
-
-  # adb
-  PATH="${ADB_HOME}/bin:${PATH}"
+###-tns-completion-start-###
+if [ -f /Users/davidwatts/.tnsrc ]; then 
+    source /Users/davidwatts/.tnsrc 
 fi
+###-tns-completion-end-###
 
-export MYBIN_HOME="${HOME}/.local"
-export PATH="${MYBIN_HOME}/bin:${HOME}/.cargo/bin:${PATH}"
-export MANPATH="${MYBIN_HOME}/share/man:$MANPATH"
-
-
-#---[zgen loading]--------------------------------------------------------------
-zgen_remote="https://github.com/tarjoilija/zgen"
-zgen_home="$HOME/.zgen"
-[ ! -d "$zgen_home" ] && git clone "$zgen_remote" "$zgen_home"
-export ZGEN_DIR="$zgen_home"
-source "$zgen_home/zgen.zsh"
-unset zgen_remote zgen_home
-
-#---[custom completition path]--------------------------------------------------
-fpath=(~/.zsh/completion $fpath)
-
-autoload -U compinit
-compinit
-
-#---[plugins]-------------------------------------------------------------------
-MINIMAL_OK_COLOR={{accent.base8()}}
-
-minimal_tmux_sessions() {
-    local c="$MINIMAL_OK_COLOR"
-    local fmt="\e[38;5;244m#{?session_attached,\e[0;3${c}m,} #S\e[0m"
-    tmux list-sessions -F "$fmt" 2> /dev/null
-}
-
-minimal_magic_output() {
-    local sessions="$(minimal_tmux_sessions)"
-    if [ "$(echo $sessions | wc -l)" -gt 1 ]; then
-        echo -n "[\e[38;5;244mtmux\e[0m -"
-        minimal_tmux_sessions | tr -d '\n'
-        echo "\e[0m]"
-    fi
-    ls -C --color="always" -w $((COLUMNS - 4))
-    git -c color.status=always status -sb 2> /dev/null
-}
-
-if ! zgen saved; then
-    zgen load subnixr/minimal
-    zgen load zsh-users/zsh-syntax-highlighting
-    zgen save
-fi
-
-#---[no history duplicates]-----------------------------------------------------
-setopt INC_APPEND_HISTORY
-setopt SHARE_HISTORY
-setopt EXTENDED_HISTORY
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_IGNORE_SPACE
-
-#---[case insensitive completition]---------------------------------------------
-zstyle ':completion:*' menu select=2
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-
-#---[vimode]--------------------------------------------------------------------
-bindkey -v
-bindkey '^P' up-history
-bindkey '^N' down-history
-bindkey '^?' backward-delete-char
-#bindkey '^h' backward-delete-char
-#bindkey '^w' backward-kill-word
-bindkey '^r' history-incremental-search-backward
-bindkey -M vicmd '/' history-incremental-search-backward
-bindkey -M vicmd 'j' history-beginning-search-forward
-bindkey -M vicmd 'k' history-beginning-search-backward
-bindkey -M vicmd 'K' run-help
-
-export KEYTIMEOUT=1
-
-
-#---[aliases]-------------------------------------------------------------------
-alias ls="ls --color=auto"
-alias l="ls -lah"
-alias grep="grep --color=auto"
-
-alias pdb="python3 -m pdb"
-
-# git
-alias gst='git status -s'
-alias gc='git commit'
-alias gcm='git commit -m'
-alias ga='git add'
-
-# git flow
-alias gffs="git flow feature start"
-alias gfff="git flow feature finish"
-
-# tmux
-alias tmuxk="tmux kill-session -t"
-alias tmuxl="tmux list-session -F #S"
-
-# xsel -> pbcopy
-if [ -e "$(which xsel)" ]; then
-    alias pbcopy="xsel -bi"
-    alias pbpaste="xsel -bo"
-fi
-
-#---[tmuxd]---------------------------------------------------------------------
-function tmuxd {
-    local td_dir="$(realpath ${1:-$(pwd)})"
-    local td_name="$(basename "$td_dir" | tr -d '.')"
-    tmux new -d -s"$td_name" -c"$td_dir"
-    # layouting
-    local td_rc="$td_dir/.tmuxrc"
-    if [ -e "$td_rc" ]; then
-        sed "s/^\([a-z0-9-]\+\)/tmux \1 -t $td_name/i" "$td_rc" |
-        env INIT_DIR="$td_dir" sh
-    fi
-}
-
-#---[python venv wrapper]-------------------------------------------------------
-[ -n "$VIRTUAL_ENV" ] && source "$VIRTUAL_ENV/bin/activate"
-
-function venv {
-    # TODO: pass other arguments ($@)
-    [ ! -d "./venv" ] && virtualenv $@ "venv"
-    source "./venv/bin/activate"
-}
-
-function vim {
-    echo "porcodio usa nvim" | cowsay -f stegosaurus
-}
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/davidwatts/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/davidwatts/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/davidwatts/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/davidwatts/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
