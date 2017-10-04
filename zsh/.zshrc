@@ -1,18 +1,18 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-export ANDROID_HOME=/usr/local/share/android-sdk
-export JAVA_HOME=/Library/Java/Home
 
-export PATH=$ANDROID_HOME/tools:$HOME/bin:/usr/local/bin:$PATH
-export PATH=$ANDROID_HOME/platform-tools:$PATH
+# Path to your oh-my-zsh installation.
+export ZSH=/Users/davidwatts/.oh-my-zsh
 
-export PATH=/Users/davidwatts/.npm-global/bin:$PATH
+# this is the root folder where all globally installed node packages will  go
+export NPM_PACKAGES="/usr/local/npm_packages"
+export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+# add to PATH
+export PATH="$NPM_PACKAGES/bin:$PATH"
 
- #Set GRADLE_HOME
-  export GRADLE_HOME=/Applications/Android\ Studio.app/Contents/gradle/gradle-3.2
-  export PATH=$PATH:$GRADLE_HOME/bin
-  export PATH=/Applications/Android\ Studio.app/Contents/plugins/android/lib/templates/gradle/wrapper/:$PATH
-
+export VIRTUALENVWRAPPER_PYTHON='/usr/local/bin/python3'
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
 
 ###-tns-completion-start-###
 if [ -f /Users/davidwatts/.tnsrc ]; then 
@@ -28,7 +28,8 @@ export ZSH=/Users/davidwatts/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="avit"
+# ZSH_THEME="robbyrussell"
+ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -66,13 +67,13 @@ ZSH_THEME="avit"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+ZSH_CUSTOM=~/Projects/dotfiles/oh-my-zsh/custom
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man colorize github jira vagrant virtualenv pip python brew osx zsh-syntax-highlighting)
+plugins=(git colored-man colorize github jira vagrant virtualenv virtualenvwrapper pip python brew osx zsh-syntax-highlighting docker)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -104,6 +105,12 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias gits="git status"
+
+
+# Spaceship theme modifications
+SPACESHIP_KUBECONTEXT_SHOW=false
+SPACESHIP_BATTERY_SHOW=false
 
 ###-tns-completion-start-###
 if [ -f /Users/davidwatts/.tnsrc ]; then 
@@ -120,3 +127,5 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export VIRTUAL_ENV_DISABLE_PROMPT=
