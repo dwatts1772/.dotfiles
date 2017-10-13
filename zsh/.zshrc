@@ -1,19 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
-export ZSH=/Users/davidwatts/.oh-my-zsh
-
-# this is the root folder where all globally installed node packages will  go
-export NPM_PACKAGES="/usr/local/npm_packages"
-export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-# add to PATH
-export PATH="$NPM_PACKAGES/bin:$PATH"
-
-export VIRTUALENVWRAPPER_PYTHON='/usr/local/bin/python3'
-export WORKON_HOME=$HOME/.virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
-
 ###-tns-completion-start-###
 if [ -f /Users/davidwatts/.tnsrc ]; then 
     source /Users/davidwatts/.tnsrc 
@@ -67,7 +54,7 @@ ZSH_THEME="spaceship"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=~/Projects/dotfiles/oh-my-zsh/custom
+ZSH_CUSTOM=$HOME/Projects/dotfiles/oh-my-zsh/custom
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -78,6 +65,21 @@ plugins=(git colored-man colorize github jira vagrant virtualenv virtualenvwrapp
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+
+# this is the root folder where all globally installed node packages will  go
+export NPM_PACKAGES="/usr/local/npm_packages"
+export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+# add to PATH
+export PATH="$NPM_PACKAGES/bin:$PATH"
+
+export VIRTUALENVWRAPPER_PYTHON='/usr/local/bin/python3'
+export VIRTUALENV_PYTHON='/usr/local/bin/python3'
+export WORKON_HOME=$HOME/.virtualenvs
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
+source /usr/local/bin/virtualenvwrapper.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -105,8 +107,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias gits="git status"
-
 
 # Spaceship theme modifications
 SPACESHIP_KUBECONTEXT_SHOW=false
@@ -116,6 +116,8 @@ SPACESHIP_BATTERY_SHOW=false
 if [ -f /Users/davidwatts/.tnsrc ]; then 
     source /Users/davidwatts/.tnsrc 
 fi
+
+
 ###-tns-completion-end-###
 
 # tabtab source for serverless package
@@ -128,4 +130,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export VIRTUAL_ENV_DISABLE_PROMPT=
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
