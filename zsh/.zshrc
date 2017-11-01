@@ -79,6 +79,9 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 
+export NVM_DIR="$HOME/.nvm"
+  . "/usr/local/opt/nvm/nvm.sh"
+
 source /usr/local/bin/virtualenvwrapper.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -107,6 +110,10 @@ source /usr/local/bin/virtualenvwrapper.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# shows in list format, follow symlinks colorized
+alias ls='ls -lGH'
+alias manpy='./manage.py'
 
 # Spaceship theme modifications
 SPACESHIP_KUBECONTEXT_SHOW=false

@@ -1197,6 +1197,8 @@ spaceship_char() {
   _prompt_section "%(?.green.red)" "${SPACESHIP_PROMPT_SYMBOL} "
 }
 
+
+
 # ------------------------------------------------------------------------------
 # BACKWARD COMPATIBILITY WARNINGS
 # Show deprecation messages for options that are set, but not supported
