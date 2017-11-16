@@ -65,22 +65,31 @@ plugins=(git colored-man colorize github jira vagrant virtualenv virtualenvwrapp
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+# GOLang Things
+export GOPATH=$HOME/golang
+export GOROOT=/usr/local/opt/go/libexec
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOPATH
+export PATH=$PATH:$GOROOT/bin
 
+# NPM things
 # this is the root folder where all globally installed node packages will  go
 export NPM_PACKAGES="/usr/local/npm_packages"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-# add to PATH
 export PATH="$NPM_PACKAGES/bin:$PATH"
+export NVM_DIR="$HOME/.nvm"
+  . "/usr/local/opt/nvm/nvm.sh"
 
+export PATH="/usr/local/opt/rubinius/bin:$PATH"
+
+# Python things
 export VIRTUALENVWRAPPER_PYTHON='/usr/local/bin/python3'
 export VIRTUALENV_PYTHON='/usr/local/bin/python3'
 export WORKON_HOME=$HOME/.virtualenvs
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-
-export NVM_DIR="$HOME/.nvm"
-  . "/usr/local/opt/nvm/nvm.sh"
+export PATH="/Users/davidwatts/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 source /usr/local/bin/virtualenvwrapper.sh
 
@@ -115,6 +124,11 @@ source /usr/local/bin/virtualenvwrapper.sh
 alias ls='ls -lGH'
 alias manpy='./manage.py'
 
+# FullstackLabs Projects
+alias siemens-pa-api='~/Projects/siemens-product-advisor-api'
+alias siemens-pa-cms='~/Projects/siemens-product-advisor-cms'
+
+
 # Spaceship theme modifications
 SPACESHIP_KUBECONTEXT_SHOW=false
 SPACESHIP_BATTERY_SHOW=false
@@ -136,7 +150,3 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
