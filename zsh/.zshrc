@@ -21,37 +21,14 @@ ZSH_THEME="spaceship"
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
+COMPLETION_WAITING_DOTS="true"
 
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$HOME/Projects/dotfiles/oh-my-zsh/custom
@@ -63,6 +40,10 @@ ZSH_CUSTOM=$HOME/Projects/dotfiles/oh-my-zsh/custom
 plugins=(git colored-man colorize github jira vagrant virtualenv virtualenvwrapper pip python brew osx zsh-syntax-highlighting docker)
 
 source $ZSH/oh-my-zsh.sh
+
+command_exists () {
+    type "$1" &> /dev/null ;
+}
 
 # User configuration
 # GOLang Things
@@ -86,12 +67,18 @@ export PATH="/usr/local/opt/rubinius/bin:$PATH"
 export VIRTUALENVWRAPPER_PYTHON='/usr/local/bin/python3'
 export VIRTUALENV_PYTHON='/usr/local/bin/python3'
 export WORKON_HOME=$HOME/.virtualenvs
+command_exists virtualenv && \
+    source /usr/local/bin/virtualenvwrapper.sh
 
+## Pyenv
 export PATH="/Users/davidwatts/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-source /usr/local/bin/virtualenvwrapper.sh
+command_exists pyenv && \
+    eval "$(pyenv init -)"
+command_exists pyenv && \
+    eval "$(pyenv virtualenv-init -)"
+## Direnv
+command_exists direnv && \
+    eval "$(direnv hook zsh)"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -121,7 +108,12 @@ source /usr/local/bin/virtualenvwrapper.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # shows in list format, follow symlinks colorized
-alias ls='ls -lGH'
+if command_exists exa; then
+    alias ls='exa -lGH'
+else
+    alias ls='ls -lGH'
+fi;
+
 alias manpy='./manage.py'
 
 # FullstackLabs Projects
