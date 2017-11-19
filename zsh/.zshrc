@@ -50,6 +50,7 @@ command_exists () {
 export GOPATH=$HOME/golang
 export GOROOT=/usr/local/opt/go/libexec
 export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOBIN
 export PATH=$PATH:$GOPATH
 export PATH=$PATH:$GOROOT/bin
 
