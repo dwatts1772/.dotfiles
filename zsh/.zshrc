@@ -7,6 +7,11 @@ if [ -f /Users/davidwatts/.tnsrc ]; then
 fi
 ###-tns-completion-end-###
 
+# Exports for oh-my-zsh Plugins
+export VIRTUALENVWRAPPER_PYTHON='/usr/local/bin/python3'
+VIRTUALENV_PYTHON='/usr/local/bin/python3'
+VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
+VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/davidwatts/.oh-my-zsh
@@ -45,28 +50,32 @@ command_exists () {
     type "$1" &> /dev/null ;
 }
 
+#######
 # User configuration
+#######
 # GOLang Things
 export GOPATH=$HOME/golang
-export GOROOT=/usr/local/opt/go/libexec
-export GOBIN=$GOPATH/bin
-export PATH=$PATH:$GOPATH
-export PATH=$PATH:$GOROOT/bin
-
+GOROOT=/usr/local/opt/go/libexec
+GOBIN=$GOPATH/bin
+PATH=$PATH:$GOPATH
+PATH=$PATH:$GOROOT/bin
+#######
 # NPM things
+#######
 # this is the root folder where all globally installed node packages will  go
 export NPM_PACKAGES="/usr/local/npm_packages"
-export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-export PATH="$NPM_PACKAGES/bin:$PATH"
-export NVM_DIR="$HOME/.nvm"
+NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+PATH="$NPM_PACKAGES/bin:$PATH"
+NVM_DIR="$HOME/.nvm"
   . "/usr/local/opt/nvm/nvm.sh"
 
 export PATH="/usr/local/opt/rubinius/bin:$PATH"
-
+#######
 # Python things
-export VIRTUALENVWRAPPER_PYTHON='/usr/local/bin/python3'
-export VIRTUALENV_PYTHON='/usr/local/bin/python3'
-export WORKON_HOME=$HOME/.virtualenvs
+#######
+export PIP_PREFIX="/usr/local/bin/pip3"
+WORKON_HOME=$HOME/.virtualenvs
+# if [ command_exists virtualenv ] && [ command_exists]
 command_exists virtualenv && \
     source /usr/local/bin/virtualenvwrapper.sh
 
