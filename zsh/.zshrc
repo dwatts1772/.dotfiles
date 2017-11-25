@@ -2,8 +2,8 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 ###-tns-completion-start-###
-if [ -f /Users/davidwatts/.tnsrc ]; then 
-    source /Users/davidwatts/.tnsrc 
+if [ -f $HOME/.tnsrc ]; then 
+    source $HOME/.tnsrc 
 fi
 ###-tns-completion-end-###
 
@@ -14,7 +14,7 @@ VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/davidwatts/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 
 # Set name of the theme to load. Optionally, if you set this to "random"
@@ -36,7 +36,7 @@ ZSH_THEME="spaceship"
 COMPLETION_WAITING_DOTS="true"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=$HOME/Projects/dotfiles/oh-my-zsh/custom
+#ZSH_CUSTOM=$HOME/Projects/dotfiles/oh-my-zsh/custom
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -53,6 +53,14 @@ command_exists () {
 #######
 # User configuration
 #######
+
+#Linux brew
+if test -d /home/linuxbrew; then
+    test -d ~/.linuxbrew && PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin:$PATH"
+    test -d /home/linuxbrew/.linuxbrew && PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH"
+    export PATH="$(brew --prefix)/bin:$(brew --prefix)/sbin:$PATH"
+fi
+
 # GOLang Things
 export GOPATH=$HOME/golang
 GOROOT=/usr/local/opt/go/libexec
@@ -67,8 +75,9 @@ PATH=$PATH:$GOROOT/bin
 export NPM_PACKAGES="/usr/local/npm_packages"
 NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 PATH="$NPM_PACKAGES/bin:$PATH"
+
 NVM_DIR="$HOME/.nvm"
-  . "/usr/local/opt/nvm/nvm.sh"
+test -d $NVM_DIR && . "/usr/local/opt/nvm/nvm.sh"
 
 export PATH="/usr/local/opt/rubinius/bin:$PATH"
 #######
@@ -81,7 +90,7 @@ command_exists virtualenv && \
     source /usr/local/bin/virtualenvwrapper.sh
 
 ## Pyenv
-export PATH="/Users/davidwatts/.pyenv/bin:$PATH"
+export PATH="$HOME/.pyenv/bin:$PATH"
 command_exists pyenv && \
     eval "$(pyenv init -)"
 command_exists pyenv && \
@@ -120,8 +129,8 @@ SPACESHIP_KUBECONTEXT_SHOW=false
 SPACESHIP_BATTERY_SHOW=false
 
 ###-tns-completion-start-###
-if [ -f /Users/davidwatts/.tnsrc ]; then 
-    source /Users/davidwatts/.tnsrc 
+if [ -f $HOME/.tnsrc ]; then 
+    source $HOME/.tnsrc 
 fi
 
 
@@ -129,10 +138,10 @@ fi
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /Users/davidwatts/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/davidwatts/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
+[[ -f $HOME/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . $HOME/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
 # tabtab source for sls package
 # uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /Users/davidwatts/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/davidwatts/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
+[[ -f $HOME/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . $HOME/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

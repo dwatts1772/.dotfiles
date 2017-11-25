@@ -1,0 +1,8 @@
+
+#!/usr/bin/env bash
+
+test -d /home/linuxbrew && exit 0
+
+echo "Installing Linuxbrew"
+
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
