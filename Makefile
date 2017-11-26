@@ -23,12 +23,10 @@ XDG_CONFIG_HOME ?= $(HOME)/.config
 XDG_DATA_HOME ?= $(HOME)/.local/share
 
 ifeq "$(shell uname)" "Darwin"
-PKGS = ack bin firefox npm nvim tmux zsh
-BREW = homebrew
+PKGS =  nvim zsh oh-my-zsh
 else
 APT_PKGS = ack firefox git npm tmux zsh terminator
 PKGS = albert bin termite oh-my-zsh $(APT_PKGS)
-BREW = linuxbrew
 endif
 TMPL_INCLUDE = nvim termite tmux oh-my-zsh zsh
 DIST_PKGS = $(patsubst %,$(DIST_DIR)/%/,$(PKGS))
@@ -42,10 +40,9 @@ all: $(DIST_PKGS)
 
 .PHONY: install
 install:
-	@chmod +x scripts
+	@chmod +x ./install/
+	@sh -e ./install.sh
 	@stow -R $(STOW_FLAGS) $(PKGS)
-	@sh -e ./scripts/$(BREW)
-	@sh -e ./scripts/oh-my-zsh.sh
 
 .PHONY: uninstall
 uninstall:
@@ -59,11 +56,11 @@ clean:
 $(patsubst %,$(DIST_DIR)/%/,$(TMPL_INCLUDE)):
 	@mkdir -p $(DIST_DIR)
 	$(eval REQ = $(lastword $(subst /, ,$@)))
-	cp -r -t $(DIST_DIR) $(REQ)
+	cp -R $(REQ) $(DIST_DIR)
 
 $(DIST_DIR)/%/: %/
 	@mkdir -p $(DIST_DIR)
-	cp -r -t $(DIST_DIR) $<
+	cp -R $< $(DIST_DIR)
 
 .PHONY: install-apt-packages
 install-apt-packages:
