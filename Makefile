@@ -42,6 +42,7 @@ all: $(DIST_PKGS)
 install:
 	@chmod +x ./install/
 	@sh -e ./install.sh
+	@echo "\n\nStowing from dist folder..."
 	@stow -R $(STOW_FLAGS) $(PKGS)
 
 .PHONY: uninstall

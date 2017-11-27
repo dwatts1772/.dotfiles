@@ -32,6 +32,7 @@ formulas=(
     python3
     stow
     zsh-completions
+    micro
 )
 
 for formula in "${formulas[@]}"; do

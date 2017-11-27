@@ -6,7 +6,7 @@ command_exists() {
 
 echo "Installing dotfiles."
 
-only perform macOS-specific install
+# only perform macOS-specific install
 if [ "$(uname)" == "Darwin" ]; then
     echo -e "\n\nRunning on OSX"
 
