@@ -2,8 +2,8 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 ###-tns-completion-start-###
-if [ -f $HOME/.tnsrc ]; then 
-    source $HOME/.tnsrc 
+if [ -f $HOME/.tnsrc ]; then
+    source $HOME/.tnsrc
 fi
 ###-tns-completion-end-###
 
@@ -12,6 +12,7 @@ export VIRTUALENVWRAPPER_PYTHON='/usr/local/bin/python3'
 VIRTUALENV_PYTHON='/usr/local/bin/python3'
 VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+WORKON_HOME=$HOME/.virtualenvs
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -42,7 +43,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man colorize github jira vagrant virtualenv virtualenvwrapper pip python brew osx zsh-syntax-highlighting docker)
+plugins=(git colored-man colorize github jira vagrant virtualenv virtualenvwrapper pip pyenv python brew osx zsh-syntax-highlighting docker)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -83,21 +84,22 @@ export PATH="/usr/local/opt/rubinius/bin:$PATH"
 #######
 # Python things
 #######
-export PIP_PREFIX="/usr/local/bin/pip3"
-WORKON_HOME=$HOME/.virtualenvs
-# if [ command_exists virtualenv ] && [ command_exists]
-command_exists virtualenv && \
-    source /usr/local/bin/virtualenvwrapper.sh
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+export PATH="/usr/local/lib:$PATH"
 
+########
 ## Pyenv
-export PATH="$HOME/.pyenv/bin:$PATH"
-command_exists pyenv && \
-    eval "$(pyenv init -)"
-command_exists pyenv && \
-    eval "$(pyenv virtualenv-init -)"
+########
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+##########
 ## autoenv
-[ -f "$(brew --prefix autoenv)/activate.sh" ] && \
-    source $(brew --prefix autoenv)/activate.sh
+##########
+# [ -f "$(brew --prefix autoenv)/activate.sh" ] && \
+# source $(brew --prefix autoenv)/activate.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -111,11 +113,11 @@ alias zshconfig="code ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # shows in list format, follow symlinks colorized
-if command_exists exa; then
-    alias ls='exa -lGH'
-else
-    alias ls='ls -lGH'
-fi;
+# if command_exists exa; then
+#     alias ls='exa -lGH'
+# else
+alias ls='ls -lGH'
+# fi;
 
 alias manpy='./manage.py'
 
@@ -129,8 +131,8 @@ SPACESHIP_KUBECONTEXT_SHOW=false
 SPACESHIP_BATTERY_SHOW=false
 
 ###-tns-completion-start-###
-if [ -f $HOME/.tnsrc ]; then 
-    source $HOME/.tnsrc 
+if [ -f $HOME/.tnsrc ]; then
+    source $HOME/.tnsrc
 fi
 
 
@@ -145,3 +147,5 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+echo "\e[2mzsh sourced"
