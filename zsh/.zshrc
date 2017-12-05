@@ -51,6 +51,11 @@ command_exists () {
     type "$1" &> /dev/null ;
 }
 
+git-shorten-url() {
+    #do things with parameters like $1 such as
+    curl -i https://git.io -F "url=$1"
+}
+
 #######
 # User configuration
 #######
@@ -149,3 +154,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 echo "\e[2mzsh sourced"
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
