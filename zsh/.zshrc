@@ -113,6 +113,25 @@ eval "$(pyenv virtualenv-init -)"
 #   export EDITOR='mvim'
 # fi
 
+#########
+# Android
+#########
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export ANDROID_HOME=/usr/local/share/android-sdk
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+export ANDROID_NDK_HOME=/usr/local/share/android-ndk
+export ANT_HOME=/usr/local/share/ant
+export MAVEN_HOME=/usr/local/share/maven
+export GRADLE_HOME=/usr/local/share/gradle
+
+export PATH=$ANT_HOME/bin:$PATH
+export PATH=$MAVEN_HOME/bin:$PATH
+export PATH=$GRADLE_HOME/bin:$PATH
+export PATH=$ANDROID_HOME/tools:$PATH
+export PATH=$ANDROID_HOME/platform-tools:$PATH
+export PATH=$ANDROID_HOME/build-tools/19.1.0:$PATH
+
+
 # Example aliases
 alias zshconfig="code ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -124,11 +143,15 @@ alias zshconfig="code ~/.zshrc"
 alias ls='ls -lGH'
 # fi;
 
+alias mpy='./manage.py'
 alias manpy='./manage.py'
+alias mpyserver='manpy server'
 
 # FullstackLabs Projects
 alias siemens-pa-api='~/Projects/siemens-product-advisor-api'
 alias siemens-pa-cms='~/Projects/siemens-product-advisor-cms'
+
+alias gitremovelocalbranches='git branch --merged >/tmp/merged-branches && micro /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 
 
 # Spaceship theme modifications
