@@ -1,0 +1,60 @@
+{
+  "alfredtheme" : {
+    "result" : {
+      "textSpacing" : 4,
+      "subtext" : {
+        "size" : 11,
+        "colorSelected" : "#FFFFFFFF",
+        "font" : "Lucida Grande",
+        "color" : "#B4B4B499"
+      },
+      "shortcut" : {
+        "size" : 16,
+        "colorSelected" : "#FBFBFBFF",
+        "font" : "Lucida Grande",
+        "color" : "#6D6D74FF"
+      },
+      "backgroundSelected" : "#5C7779FF",
+      "text" : {
+        "size" : 20,
+        "colorSelected" : "#FFFFFFFF",
+        "font" : "System",
+        "color" : "#B4B4B499"
+      },
+      "iconPaddingHorizontal" : 5,
+      "paddingVertical" : 2,
+      "iconSize" : 40
+    },
+    "separator" : {
+      "color" : "#FEFFFF00",
+      "thickness" : 1
+    },
+    "search" : {
+      "paddingVertical" : 16,
+      "background" : "#00000000",
+      "spacing" : 10,
+      "text" : {
+        "size" : 36,
+        "colorSelected" : "#576266FF",
+        "font" : "System",
+        "color" : "#FFFFFFFF"
+      },
+      "backgroundSelected" : "#CACACAFF"
+    },
+    "scrollbar" : {
+      "color" : "#D4D4D4FF",
+      "thickness" : 2
+    },
+    "name" : "Minimalistic 3 Dark Mode",
+    "window" : {
+      "color" : "#1A1A1AD8",
+      "paddingHorizontal" : 23,
+      "width" : 732,
+      "borderPadding" : 10,
+      "borderColor" : "#FCFFFF00",
+      "blur" : 40,
+      "roundness" : 5,
+      "paddingVertical" : 9
+    }
+  }
+}
