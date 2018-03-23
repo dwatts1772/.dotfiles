@@ -8,15 +8,48 @@ fi
 ###-tns-completion-end-###
 
 # Exports for oh-my-zsh Plugins
-export VIRTUALENVWRAPPER_PYTHON='/usr/local/bin/python3'
-VIRTUALENV_PYTHON='/usr/local/bin/python3'
+export VIRTUALENVWRAPPER_PYTHON=`where python3` #'/usr/local/bin/python3'
+VIRTUALENV_PYTHON=`where python3` #'/usr/local/bin/python3'
 VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 WORKON_HOME=$HOME/.virtualenvs
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
+ohmyzshplugins=(git \
+    colored-man \
+    colorize \
+    github \
+    pip \
+    pyenv \
+    python \
+    brew \
+    osx \
+    zsh-syntax-highlighting \
+docker)
+githubplugins=("MichaelAquilina/zsh-you-should-use")
 
+# ZPlug stuff
+export ZPLUG_HOME=/usr/local/opt/zplug
+if test -d $ZPLUG_HOME; then
+    source $ZPLUG_HOME/init.zsh
+    # load oh-my-zsh plugins
+    for plugin in "${ohmyzshplugins[@]}"
+    do
+        zplug "plugins/$plugin", from:oh-my-zsh
+    done
+    # load github plugins
+    for plugin in "${githubplugins[@]}"
+    do
+        zplug $plugin
+    done
+    
+    if ! zplug; then
+        zplug install
+    fi
+    
+    zplug load
+fi
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -43,7 +76,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man colorize github jira vagrant virtualenv virtualenvwrapper pip pyenv python brew osx zsh-syntax-highlighting docker)
+#plugins=(git colored-man colorize github pip pyenv python brew osx zsh-syntax-highlighting docker)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -153,7 +186,6 @@ alias siemens-pa-cms='~/Projects/siemens-product-advisor-cms'
 
 alias gitremovelocalbranches='git branch --merged >/tmp/merged-branches && micro /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 
-
 # Spaceship theme modifications
 SPACESHIP_KUBECONTEXT_SHOW=false
 SPACESHIP_BATTERY_SHOW=false
@@ -172,9 +204,35 @@ fi
 # tabtab source for sls package
 # uninstall by removing these lines or running `tabtab uninstall sls`
 [[ -f $HOME/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . $HOME/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# place this after nvm initialization!
+autoload -U add-zsh-hook
+load-nvmrc() {
+    local node_version="$(nvm version)"
+    local nvmrc_path="$(nvm_find_nvmrc)"
+    
+    if [ -n "$nvmrc_path" ]; then
+        local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+        
+        if [ "$nvmrc_node_version" = "N/A" ]; then
+            nvm install
+            elif [ "$nvmrc_node_version" != "$node_version" ]; then
+            nvm use
+        fi
+        elif [ "$node_version" != "$(nvm version default)" ]; then
+        echo "Reverting to nvm default version"
+        nvm use default
+    fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+
 echo "\e[2mzsh sourced"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
