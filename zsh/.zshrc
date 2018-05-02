@@ -186,6 +186,11 @@ alias siemens-pa-cms='~/Projects/siemens-product-advisor-cms'
 
 alias gitremovelocalbranches='git branch --merged >/tmp/merged-branches && micro /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 
+alias c.="code ."
+
+alias yys="yarn && yarn start"
+alias ys="yarn start"
+
 # Spaceship theme modifications
 SPACESHIP_KUBECONTEXT_SHOW=false
 SPACESHIP_BATTERY_SHOW=false
@@ -229,7 +234,7 @@ load-nvmrc() {
     fi
 }
 add-zsh-hook chpwd load-nvmrc
-load-nvmrc
+#load-nvmrc
 
 echo "\e[2mzsh sourced"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
