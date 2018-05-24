@@ -183,6 +183,8 @@ alias mpyserver='manpy server'
 # FullstackLabs Projects
 alias siemens-pa-api='~/Projects/siemens-product-advisor-api'
 alias siemens-pa-cms='~/Projects/siemens-product-advisor-cms'
+alias spacemx-client='~/Projects/SpaceMX/spacemx-client'
+alias spacemx-api='~/Projects/SpaceMX/spacemx-api'
 
 alias gitremovelocalbranches='git branch --merged >/tmp/merged-branches && micro /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 
