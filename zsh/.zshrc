@@ -164,7 +164,7 @@ export PATH=$ANDROID_HOME/tools:$PATH
 export PATH=$ANDROID_HOME/platform-tools:$PATH
 export PATH=$ANDROID_HOME/build-tools/19.1.0:$PATH
 
-
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 # Example aliases
 alias zshconfig="code ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -185,13 +185,17 @@ alias siemens-pa-api='~/Projects/siemens-product-advisor-api'
 alias siemens-pa-cms='~/Projects/siemens-product-advisor-cms'
 alias spacemx-client='~/Projects/SpaceMX/spacemx-client'
 alias spacemx-api='~/Projects/SpaceMX/spacemx-api'
+alias temp-spacemx-client='~/Projects/SpaceMX/_tempRepos/temp-spacemx-client'
+alias temp-spacemx-api='~/Projects/SpaceMX/_tempRepos/temp-spacemx-api'
 
 alias gitremovelocalbranches='git branch --merged >/tmp/merged-branches && micro /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 
 alias c.="code ."
 
-alias yys="yarn && yarn start"
+alias y="yarn"
 alias ys="yarn start"
+alias yys="yarn && yarn start"
+alias yt="yarn test"
 
 # Spaceship theme modifications
 SPACESHIP_KUBECONTEXT_SHOW=false
