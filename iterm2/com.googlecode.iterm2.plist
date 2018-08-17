@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AlternateMouseScroll</key>
+	<true/>
 	<key>AppleAntiAliasingThreshold</key>
 	<integer>1</integer>
 	<key>AppleScrollAnimationEnabled</key>
@@ -1400,15 +1402,15 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>409 265 884 332 0 0 1680 1028 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>530 493 620 392 0 0 1680 1050 </string>
+	<string>4250 469 620 392 3600 -30 1920 1058 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 369 599 388 0 0 1680 1050 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>685 583 928 394 0 0 1680 1050 </string>
+	<string>2273 339 796 473 1680 -30 1920 1080 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>127 444 592 584 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>226 172 620 511 0 0 1680 1028 </string>
+	<string>3612 12 1880 1016 3600 -30 1920 1058 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -3229,7 +3231,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-05-30T16:42:23Z</date>
+	<date>2018-07-26T04:53:21Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>Secure Input</key>
