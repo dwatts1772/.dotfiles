@@ -5,11 +5,15 @@ Generate `dist` folder of config files
 $ make
 ```
 
-Create symlinks for all in `dist` folder
+Install packages and create symlinks for all in `dist` folder
 ```shell
 $ make install
 ```
 
+Create symlinks for all in `dist` folder
+```shell
+$ make link
+```
 
 ## Ubuntu
 

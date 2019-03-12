@@ -1,5 +1,10 @@
+#! /etc/bash
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+export HISTSIZE=1000
+export HISTFILE="$HOME/.zsh_history"
+export SAVEHIST=1000
 
 ###-tns-completion-start-###
 if [ -f $HOME/.tnsrc ]; then
@@ -16,17 +21,21 @@ WORKON_HOME=$HOME/.virtualenvs
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-ohmyzshplugins=(git \
+ohmyzshplugins=(
+    git \
     colored-man \
     colorize \
     github \
-    pip \
-    pyenv \
-    python \
+    # pip \
+    # pyenv \
+    # python \
     brew \
     osx \
     zsh-syntax-highlighting \
-docker)
+    zsh-autosuggestions \
+    iterm2 \
+    docker
+)
 githubplugins=("MichaelAquilina/zsh-you-should-use")
 
 # ZPlug stuff
@@ -55,7 +64,10 @@ fi
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-ZSH_THEME="spaceship"
+# ZSH_THEME="spaceship"
+ZSH_THEME="powerlevel9k/powerlevel9k"
+
+source ~/.powerlevelrc
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -115,9 +127,6 @@ export NPM_PACKAGES="/usr/local/npm_packages"
 NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 PATH="$NPM_PACKAGES/bin:$PATH"
 
-NVM_DIR="$HOME/.nvm"
-test -d $NVM_DIR && . "/usr/local/opt/nvm/nvm.sh"
-
 export PATH="/usr/local/opt/rubinius/bin:$PATH"
 #######
 # Python things
@@ -128,10 +137,10 @@ export PATH="/usr/local/lib:$PATH"
 ########
 ## Pyenv
 ########
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# export PYENV_ROOT="$HOME/.pyenv"
+# export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 
 ##########
 ## autoenv
@@ -188,26 +197,23 @@ alias spacemx-api='~/Projects/SpaceMX/spacemx-api'
 alias temp-spacemx-client='~/Projects/SpaceMX/_tempRepos/temp-spacemx-client'
 alias temp-spacemx-api='~/Projects/SpaceMX/_tempRepos/temp-spacemx-api'
 
-alias gitremovelocalbranches='git branch --merged >/tmp/merged-branches && micro /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
+#alias gitremovelocalbranches='git branch --merged >/tmp/merged-branches && micro /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
+
+gitremovelocalbranches(){
+    git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done
+}
 
 alias c.="code ."
-
 alias y="yarn"
 alias ys="yarn start"
 alias yys="yarn && yarn start"
 alias yt="yarn test"
+alias gcq="git checkout qa"
+alias nvmu="nvm use"
 
 # Spaceship theme modifications
 SPACESHIP_KUBECONTEXT_SHOW=false
 SPACESHIP_BATTERY_SHOW=false
-
-###-tns-completion-start-###
-if [ -f $HOME/.tnsrc ]; then
-    source $HOME/.tnsrc
-fi
-
-
-###-tns-completion-end-###
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
@@ -217,7 +223,9 @@ fi
 [[ -f $HOME/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . $HOME/.npm-global/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+NVM_DIR="$HOME/.nvm"
+test -d $NVM_DIR && . "/usr/local/opt/nvm/nvm.sh"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # place this after nvm initialization!
@@ -242,8 +250,33 @@ load-nvmrc() {
 add-zsh-hook chpwd load-nvmrc
 #load-nvmrc
 
-echo "\e[2mzsh sourced"
+# Slack black theme (https://github.com/caiceA/slack-black-theme/)
+slackBlackTheme(){
+    local blackThemeURL="https://raw.githubusercontent.com/caiceA/slack-black-theme/master/ssb-interop.js"
+    local slackLocation="/Applications/Slack.app/Contents/Resources/app.asar.unpacked/src/static"
+    local interopFile="ssb-interop.js"
+    local interopFileBackup="ssb-interop.js.backup"
+    
+    echo "Copying slack interop file..."
+    sudo cp "$slackLocation/$interopFile" "$slackLocation/$interopFileBackup"
+    
+    echo "Downloading latest slack black theme interop file..."
+    sudo curl -o "$slackLocation/$interopFile" "$blackThemeURL"
+
+    echo "Closing Slack..."
+    killall Slack
+    while pgrep -u root Slack > /dev/null; do sleep 1; done
+    
+    echo "Launching Slack..."
+    open -a Slack
+}
+
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
+
+echo "\e[2mzsh sourced"
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /Users/davidwatts/Projects/SpaceMX/spacemx-sitemap-generator/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/davidwatts/Projects/SpaceMX/spacemx-sitemap-generator/node_modules/tabtab/.completions/slss.zsh

@@ -45,6 +45,11 @@ install:
 	@echo "\n\nStowing from dist folder..."
 	@stow -R $(STOW_FLAGS) $(PKGS)
 
+.PHONY: link
+link:
+	@echo "\n\nStowing from dist folder..."
+	@stow -R $(STOW_FLAGS) $(PKGS)
+
 .PHONY: uninstall
 uninstall:
 	stow -D $(STOW_FLAGS) $(PKGS)

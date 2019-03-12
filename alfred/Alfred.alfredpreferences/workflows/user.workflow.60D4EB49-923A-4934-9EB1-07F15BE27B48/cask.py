@@ -20,12 +20,8 @@ DEFAULT_SETTINGS = {
 }
 
 
-def execute(wf, command):
-    if command not in ['search', 'list', 'alfred status']:
-        return None
-
+def execute(wf, cmd_list):
     opts = wf.settings.get('HOMEBREW_CASK_OPTS', None)
-    cmd_list = ['brew', 'cask', command]
     if opts:
         if all(k in opts for k in ('appdir')):
             cmd_list += ['--appdir=%s' % opts['appdir']]
@@ -46,11 +42,15 @@ def execute(wf, command):
 
 
 def get_all_casks():
-    return execute(wf, 'search').splitlines()[1:]
+    return execute(wf, ['brew', 'search', '--casks']).splitlines()
 
 
 def get_installed_casks():
-    return execute(wf, 'list').splitlines()
+    return execute(wf, ['brew', 'cask', 'list']).splitlines()
+
+
+def get_outdated_casks():
+    return execute(wf, ['brew', 'cask', 'outdated']).splitlines()
 
 
 def filter_all_casks(wf, query):
@@ -73,6 +73,16 @@ def filter_installed_casks(wf, query):
     return formulas
 
 
+def filter_outdated_casks(wf, query):
+    formulas = wf.cached_data('cask_outdated_casks',
+                              get_outdated_casks,
+                              max_age=3600)
+    query_filter = query.split()
+    if len(query_filter) > 1:
+        return wf.filter(query_filter[1], formulas, match_on=MATCH_SUBSTRING)
+    return formulas
+
+
 def edit_settings(wf):
     # Create default settings if they not exist
     if (not os.path.exists(wf.settings_path) or
@@ -84,11 +94,11 @@ def edit_settings(wf):
 
 
 def cask_installed(wf):
-    return not execute(wf, 'search').startswith('Error')
+    return not execute(wf, ['brew', 'search', '--casks']).startswith('Error')
 
 
 def cask_configured(wf):
-    return not execute(wf, 'search').startswith('Config')
+    return not execute(wf, ['brew', 'search', '--casks']).startswith('Config')
 
 
 def main(wf):
@@ -111,9 +121,8 @@ def main(wf):
                     valid=True,
                     icon='cask.png')
         wf.add_item('I trust this workflow',
-                    'Hit enter to run `brew install caskroom/cask/brew-cask`'
-                    ' to install cask...',
-                    arg='brew install caskroom/cask/brew-cask',
+                    'Hit enter to run `brew tap caskroom/cask` to get cask...',
+                    arg='brew tap caskroom/cask',
                     valid=True,
                     icon='cask.png')
         # delete cached file
@@ -142,6 +151,15 @@ def main(wf):
         # extract query
         query = wf.args[0] if len(wf.args) else None
 
+        if (not query and
+                len(wf.cached_data('cask_outdated_casks',
+                                   get_outdated_casks,
+                                   max_age=3600)) > 0):
+            wf.add_item('Some of your casks are outdated!',
+                        autocomplete='outdated ',
+                        valid=False,
+                        icon=helpers.get_icon(wf, 'cloud-download'))
+
         if query and query.startswith('install'):
             for formula in filter_all_casks(wf, query):
                 wf.add_item(formula, 'Install cask',
@@ -165,6 +183,13 @@ def main(wf):
             for formula in filter_installed_casks(wf, query):
                 wf.add_item(formula, 'Open homepage',
                             arg='brew cask home %s' % formula,
+                            valid=True,
+                            icon=helpers.get_icon(wf, 'package'))
+        elif query and query.startswith('outdated'):
+            for formula in filter_outdated_casks(wf, query):
+                name = formula.split(' ')[0]
+                wf.add_item(formula, 'Upgrade cask',
+                            arg='brew cask upgrade %s' % name,
                             valid=True,
                             icon=helpers.get_icon(wf, 'package'))
         elif query and query.startswith('config'):
