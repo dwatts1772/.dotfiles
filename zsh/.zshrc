@@ -188,7 +188,7 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 #########
 # GITHUB
 #########
-export GITHUB_TOKEN=944a89479e807009b47d4644cf8403ec4f8570ac
+export GITHUB_TOKEN=
 
 # Example aliases
 alias zshconfig="code ~/.zshrc"
