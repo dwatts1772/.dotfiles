@@ -33,7 +33,8 @@ ohmyzshplugins=(
     osx \
     zsh-syntax-highlighting \
     zsh-autosuggestions \
-    iterm2 \
+    bgnotify \
+    # iterm2 \
     docker
 )
 githubplugins=("MichaelAquilina/zsh-you-should-use")
@@ -99,6 +100,15 @@ command_exists () {
 git-shorten-url() {
     #do things with parameters like $1 such as
     curl -i https://git.io -F "url=$1"
+}
+
+gitremovelocalbranches(){
+    git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done
+}
+
+updatedotfiles(){
+    cp ~/.zshrc ~/Projects/dotfiles/zsh/.zshrc
+    cp ~/.powerlevelrc ~/Projects/dotfiles/zsh/.powerlevelrc
 }
 
 #######
@@ -174,6 +184,12 @@ export PATH=$ANDROID_HOME/platform-tools:$PATH
 export PATH=$ANDROID_HOME/build-tools/19.1.0:$PATH
 
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+
+#########
+# GITHUB
+#########
+export GITHUB_TOKEN=944a89479e807009b47d4644cf8403ec4f8570ac
+
 # Example aliases
 alias zshconfig="code ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -199,17 +215,13 @@ alias temp-spacemx-api='~/Projects/SpaceMX/_tempRepos/temp-spacemx-api'
 
 #alias gitremovelocalbranches='git branch --merged >/tmp/merged-branches && micro /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 
-gitremovelocalbranches(){
-    git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done
-}
-
 alias c.="code ."
 alias y="yarn"
 alias ys="yarn start"
 alias yys="yarn && yarn start"
 alias yt="yarn test"
-alias gcq="git checkout qa"
 alias nvmu="nvm use"
+alias cryptoart="cd ~/Development/cryptoart"
 
 # Spaceship theme modifications
 SPACESHIP_KUBECONTEXT_SHOW=false
